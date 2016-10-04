@@ -1,0 +1,14 @@
+
+
+COPY province (id, name) FROM stdin;
+1	Western
+2	Central
+3	Eastern
+4	North Central
+5	Northern
+6	North Western
+7	Sabaragamuwa
+8	Southern
+9	Uva
+\.
+

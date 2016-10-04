@@ -1,0 +1,7 @@
+<script src="{% static 'charts/js/d3.min.js ' %}"></script>
+    <script src="{% static 'charts/js/nv.d3.min.js' %}"></script>
+    <script src="{% static 'charts/js/angular-nvd3/dist/angular-nvd3.js' %}"></script>
+
+
+                <nvd3 options='options_district_pie' data='data_district_pie' api="api_disaster_icount" config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+

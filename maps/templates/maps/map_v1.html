@@ -1,0 +1,580 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" ng-app="mapApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>CFR</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'maps/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{% static 'maps/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{% static 'maps/vendors/nprogress/nprogress.css' %}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{% static 'maps/css/custom.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'maps/css/bootstrap-select.min.css' %}">
+
+    <script src="{% static 'maps/vendors/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'maps/vendors/openlayers/ol.js' %}"></script>
+
+    <script src="{% static 'maps/js/angular/angular.js' %}"></script>
+    <script src="{% static 'maps/js/angular/angular-resource.js' %}"></script>
+    <script src="{% static 'maps/js/map.js' %}"></script>
+    <script src="{% static 'reports/js/angular-cookies/angular-cookies.min.js' %}"></script>
+    <script src="{% static 'charts/js/d3.min.js ' %}"></script>
+    <script src="{% static 'charts/js/nv.d3.min.js' %}"></script>
+    <script src="{% static 'charts/js/angular-nvd3/dist/angular-nvd3.js' %}"></script>
+    
+
+</head>
+
+<body class="nav-md" ng-controller="MapController" ng-init="init()">
+
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="index.html" class="site_title"><i class="fa fa-map-marker"></i> <span>CFR</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div class="profile">
+                    <div class="profile_pic">
+                        <img src="{% static 'maps/images/img.png' %}" alt="..." class="img-circle profile_img">
+                    </div>
+                    <div class="profile_info">
+                        <span>Welcome,</span>
+                        <h2>Admin</h2>
+                    </div>
+                </div>
+                <!-- /menu profile quick info -->
+
+                <br/>
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <h3 style="color:#898989;">----------------------------------------</h3>
+                        <ul class="nav side-menu">
+                            <li><a href="index.html"><i class="fa fa-home"></i> Dashboard </a>
+
+                            </li>
+                            <li><a href="map.html"><i class="fa fa-edit"></i> Disaster Map </a>
+
+                            </li>
+                            <li><a><i class="fa fa-desktop"></i> User Manegment <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="add_user.html">Add User</a></li>
+                                    <li><a href="profile.html">Profile</a></li>
+                                    <li><a href="user_maneger.html">Manage Users</a></li>
+
+                                </ul>
+                            </li>
+                            <!--li><a href="add_disaster.html"><i class="fa fa-table"></i> Add Disaster </a-->
+
+                            </li>
+                            <li><a href="incedent.html"><i class="fa fa-table"></i> Incedents </a>
+
+                            </li>
+                            <li><a href="charts.html"><i class="fa fa-table"></i> Charts </a>
+
+                            </li>
+
+
+                        </ul>
+                    </div>
+
+
+                </div>
+                <!-- /sidebar menu -->
+
+
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="{% static 'maps/images/img.png' %}" alt="">Admin
+                                <span class=" fa fa-angle-down"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                <li><a href="javascript:;"> Profile</a></li>
+
+                                <li><a href="javascript:;">Help</a></li>
+                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                            </ul>
+                        </li>
+
+                        <li role="presentation" class="dropdown">
+                            <!--a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                              <i class="fa fa-envelope-o"></i>
+                              <span class="badge bg-green">6</span>
+                            </a-->
+                            <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'maps/images/img.png' %}"
+                                                                 alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'maps/images/img.png' %}"
+                                                                 alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'maps/images/img.png' %}"
+                                                                 alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'maps/images/img.png' %}"
+                                                                 alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="text-center">
+                                        <a>
+                                            <strong>See All Messages</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Map Page</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a id="modal-471365" href="#modal-container-471365" role="button" class="btn"
+                                           data-toggle="modal"><i class="fa fa-save"></i></a></li>
+
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+
+
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div id="map" class="map" style="height:800px;">
+                                    <div class="col-md-4 col-sm-4 col-xs-12"
+                                         style="position:absolute;top:10px;z-index:100;">
+                                        <div class="x_panel tile fixed_height_320">
+                                            <div class="x_title">
+                                                <h4>Filtering Options</h4>
+                                                <ul style="margin-top:-35px;" class="nav navbar-right panel_toolbox">
+                                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                    </li>
+
+                                                </ul>
+
+
+                                            </div>
+                                            <div class="x_content">
+                                                <div class="col-md-12 col-sm-12" style="margin:0;padding:0;">
+                                                    <form class="form-horizontal">
+                                                        <fieldset>
+
+                                                            <!-- Select Basic -->
+                                                            <div class="form-group">
+                                                                <label class="col-md-2 control-label" for="selectbasic">Type</label>
+                                                                <div class="col-md-10">
+                                                                    <select class="form-control" ng-model="selectedDisaster" ng-change="getFilterData(selectedDisaster, 'disaster')">
+                                                                        <option value="-1">Select Disaster</option>
+                                                                        {% for disaster in disasters %}
+                                                                        <option value={{ disaster.id }}>
+                                                                           {{ disaster.english }}
+                                                                        </option>
+                                                                        {% endfor %}
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Multiple Radios -->
+                                                            <div class="form-group">
+                                                                <label class="col-md-2 control-label" for="radios">Status</label>
+                                                                <div class="col-md-10">
+                                                                    <label class="radio-inline" for="radios-0">
+                                                                        <input name="radios" ng-change="getFilterData(is_validated, 'validation')" ng-model="is_validated" id="radios-0" value="1"
+                                                                                type="radio">
+                                                                        Verified
+                                                                    </label>
+                                                                    <label class="radio-inline" for="radios-1">
+                                                                        <input name="radios" ng-model="is_validated" ng-change="getFilterData(is_validated, 'validation')" id="radios-1"  value="0"
+                                                                               type="radio">
+                                                                        Unverified
+                                                                    </label>
+                                                                    <label class="radio-inline" for="radios-2">
+                                                                        <input name="radios" ng-model="is_validated" ng-change="getFilterData(is_validated, 'validation')" id="radios-2"  value="all"
+                                                                               type="radio" checked="checked">
+                                                                        All
+                                                                    </label>
+
+                                                                </div>
+                                                            </div>
+
+
+                                                            <!-- Text input-->
+                                                            <div class="form-group">
+                                                                <label class="col-md-2 control-label" for="textinput">Date</label>
+                                                                <div class="col-md-10">
+                                                                    <input type="text" id="daterange" name="daterange"
+                                                                           class="form-control"
+                                                                           />
+                                                                    <i class="glyphicon glyphicon-calendar form-control-feedback"
+                                                                       style="margin-right:5px;margin-top:5px;"></i>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- Select Basic -->
+
+
+                                                            <div class="form-group">
+                                                                <label class="col-md-2 control-label" for="selectbasic">District</label>
+                                                                <div class="col-md-10">
+                                                                    <select ng-model="selectedDistrict" ng-change="getFilterData(selectedDistrict, 'district')" class="form-control"
+                                                                            style="border-radius:0;" >
+                                                                        <option value="-1">Select District</option>
+                                                                        {% for district in districts %}
+                                                                        <option value={{ district.name }}>
+                                                                           {{ district.name }}
+                                                                        </option>
+                                                                        {% endfor %}
+
+
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <!-- Button (Double) -->
+                                                            <div class="form-group">
+                                                                <label class="col-md-2 control-label"
+                                                                       for="button1id"></label>
+                                                                <div class="col-md-10">
+                                                                    <button ng-click="layerFilter()" id="button1id" name="button1id"
+                                                                            class="btn btn-success">Filter
+                                                                    </button>
+                                                                    <button id="button2id" name="button2id"
+                                                                            class="btn btn-default">Clear
+                                                                    </button>
+                                                                </div>
+                                                            </div>
+
+                                                        </fieldset>
+                                                    </form>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+                                        <div class="x_panel tile fixed_height_320" style="">
+                                            <div class="x_title">
+                                                <h4>Map Legend</h4>
+
+<ul style="margin-top:-35px;" class="nav navbar-right panel_toolbox">
+                                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                                    </li>
+
+                                                </ul>
+
+                                            </div>
+                                            <div class="x_content" style="height:240px;overflow:auto;">
+                                                <div class="col-md-12 col-sm-12" style="margin:0;padding:0;">
+                                                    <i style="color:#FE2B0E;" class="fa fa-stop" aria-hidden="true"></i> Today &nbsp;&nbsp;
+                                                    <i style="color:#FEA100;" class="fa fa-stop" aria-hidden="true"></i> One Week &nbsp;&nbsp;
+                                                    <i style="color:#E0FF49;" class="fa fa-stop" aria-hidden="true"></i> After One Week
+  <table class="table table" >
+	<thead>
+		<tr>
+			<th>
+
+			</th>
+
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td>
+				Chemical
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/chemical1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Cyclone
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/cyclone1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Drought
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/drought1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Earthquake
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/earthquake1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Epidemic
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/epedemic1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Explosion
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/explosion1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Fire
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/fire1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Flood
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/flood1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Landslide
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/landslide1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Thunderstorm
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/thunderstorm1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+		<tr>
+			<td>
+				Tsunami
+			</td>
+			<td>
+				<img class="dicon" src="{% static 'maps/images/CFR_icons/tsunami1.png' %}" alt="Image"/>
+			</td>
+
+		</tr>
+
+
+	</tbody>
+</table>
+
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+
+
+                                    </div>
+
+                                </div>
+                                <script>
+
+
+                                </script>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-12">
+                        <div class="modal fade" id="modal-container-471365" role="dialog" aria-labelledby="myModalLabel"
+                             aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content" style="z-index:10000000000000000000000000;">
+                                    <div class="modal-header">
+
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                            ×
+                                        </button>
+                                        <h4 class="modal-title" id="myModalLabel">
+                                            Save
+                                        </h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <ul>
+                                            {% verbatim %}
+                                            <li ng-repeat="format in LAYER_DOWNLOAD_FROMATS">
+                                                <a ng-href="{{fetch_url(format.name)}}">{{ format.name }}</a>
+                                            </li>
+                                            {% endverbatim %}
+                                        </ul>
+                                    </div>
+                                    <div class="modal-footer">
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+                <!-- /page content -->
+
+                <!-- footer content -->
+                <footer>
+                    <div class="pull-right">
+                        CFR Developed by <a href="https://geoedge.lk">GeoEDGE</a>
+                    </div>
+                    <div class="clearfix"></div>
+                </footer>
+                <!-- /footer content -->
+            </div>
+        </div>
+        <!-- Info window -->
+        <div id="popup"></div>
+
+        <!-- Bootstrap -->
+        <script src="{% static 'maps/vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+        <!-- FastClick -->
+        <script src="{% static 'maps/vendors/fastclick/lib/fastclick.js' %}"></script>
+        <!-- NProgress -->
+        <script src="{% static 'maps/vendors/nprogress/nprogress.js' %}"></script>
+
+        <script src="{% static 'maps/js/bootstrap-select.min.js' %}"></script>
+
+        <!-- Custom Theme Scripts -->
+        <script src="{% static 'maps/js/custom.js' %}"></script>
+        <script src="{% static 'maps/js/moment/moment.min.js' %}"></script>
+        <script src="{% static 'maps/js/datepicker/daterangepicker.js' %}"></script>
+
+        <script>
+            var start_date = moment().subtract(20, 'days').format('MM/DD/YYYY');
+            var end_date = moment().format('MM/DD/YYYY');
+            $(function() {
+
+                function setDateRange(start, end) {
+                    $('#daterange').data('daterangepicker').setStartDate(start_date);
+                    $('#daterange').data('daterangepicker').setEndDate(end_date);
+                }
+
+                $('#daterange').daterangepicker({
+                    startDate: start_date,
+                    endDate: end_date,
+                },
+                function(start, end, label) {
+                    start_date = start.format('YYYY-MM-DD');
+                    end_date = end.format('YYYY-MM-DD');
+                }
+                , setDateRange);
+
+                setDateRange(start_date, end_date);
+
+            });
+
+        </script>
+</body>
+</html>

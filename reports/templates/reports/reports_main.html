@@ -1,0 +1,57 @@
+{% extends "dashboard/site_header.html" %}
+
+{% load static %}
+
+{% block content %}
+    <style>
+.form-horizontal .control-label {text-align:left;}
+.btn .dropdown-toggle .btn-default {border-radius:0;}
+
+    </style>
+
+
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Reports</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+
+                               
+
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="min-height:480px;">
+
+                         
+						<div class="col-md-6">
+						 <center>
+						<a href="{% url 'reports:report' 'date_icount' %}">
+						<img src="{% static 'reports/img/calendar-icon-300x300.jpg' %}" alt="..." style="width:150px;" class="">
+						<h4>  Incident count Vs. Date</h4>
+						</a>
+						</center>
+						</div>
+						
+						<div class="col-md-6">
+						 <center>
+						<a href="{% url 'reports:report' 'district_disaster' %}">
+						<img src="{% static 'reports/img/Google-Maps-icon.png' %}" alt="..." style="width:150px;" class="">
+						 <h4>  Incident count Vs. District</h4>
+						</a>
+						</center>
+						</div>
+						
+						
+                        </div>
+                        <!-- /page content -->
+</div></div></div></div>
+                     {% endblock %}

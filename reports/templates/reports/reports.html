@@ -1,0 +1,188 @@
+{% extends "dashboard/site_header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+ <link href="{% static 'dashboard/vendors/angularPrint/angularPrint.css' %}" rel="stylesheet">
+<style>
+.form-horizontal .control-label {text-align:left;}
+.btn .dropdown-toggle .btn-default {border-radius:0;}
+#title {visibility:hidden;display:none}
+
+
+
+</style>
+
+
+<!-- page content -->
+<div class="right_col" role="main" ng-app="reportApp" ng-controller="ReportController">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Reports</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+
+
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content" style="min-height:480px;">
+                    <div class="">
+
+
+                        <div class="col-md-4">
+
+
+                            <form class="form-horizontal">
+                                <fieldset>
+
+                                    {% if filter_type == 'date_icount' %}
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" for="textinput">Date</label>
+                                        <div class="col-md-10">
+                                            <input type="text" id="daterange" name="daterange"
+                                                   class="form-control"
+                                            />
+                                            <i class="glyphicon glyphicon-calendar form-control-feedback"
+                                               style="margin-right:5px;margin-top:5px;"></i>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                                    {% if filter_type == 'district_disaster' %}
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" for="selectbasic">District</label>
+                                        <div class="col-md-10">
+                                            <select ng-model="selectedDistrict" class="form-control"
+                                            >
+                                                {% for ditrict in districts %}
+                                                <option value="{{ ditrict.name }}">{{ ditrict.name }}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    {% endif %}
+
+                                    <!-- Button (Double) -->
+                                    <div class="form-group">
+                                        <label class="col-md-2 control-label" for="button1id"></label>
+                                        <div class="col-md-10">
+                                            <button id="load_data" ng-click="loadData('{{ filter_type }}')"
+                                                    name="button1id" class="btn btn-success">
+                                                Load Data
+                                            </button>
+                                            <button id="button2id" name="button2id" class="btn btn-default">
+                                                Clear
+                                            </button>
+
+                                        </div>
+                                    </div>
+
+                                </fieldset>
+                            </form>
+
+
+                        </div>
+                        <div class="col-md-8">
+                            <div print-section>
+                                        <span class="printOnly" id="title">
+                                    {% if filter_type == 'district_disaster' %}
+                                  <h4 id="incident_district_header"></h4>
+                                        {% elif filter_type == 'date_icount' %}
+                                        <h4 id="incident_date_header">Date</h4>
+                                    {% endif %}
+                                            <hr>
+                                            </span>
+                                <table print-section ng-if="filter_data.length"
+                                       class="table table-bordered table-striped table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th ng-bind="table_head_1">
+                                        </th></th>
+                                        <th ng-bind="table_head_2">
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% if filter_type == 'district_disaster' %}
+                                    <tr ng-repeat="row in filter_data">
+                                        <td ng-bind="row.disaster_type__english">
+                                        </td>
+                                        <td ng-bind="row.count">
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+                                    {% if filter_type == 'date_icount' %}
+                                    <tr ng-repeat="row in filter_data">
+                                        <td ng-bind="row.date">
+                                        </td>
+                                        <td ng-bind="row.count">
+                                        </td>
+                                    </tr>
+                                    {% endif %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <button ng-click="report_export('{{ filter_type }}')" class="btn btn-info">Export
+                                Data
+                            </button>
+                            <button print-btn class="btn btn-info">Print
+                                Report
+                            </button>
+
+                        </div>
+                    </div>
+
+
+                </div>
+                <!-- /page content -->
+
+
+                <script>
+                var init_start_date = moment().subtract(20, 'days').format('MM/DD/YYYY');
+                var init_end_date = moment().format('MM/DD/YYYY');
+
+                var start_date = moment().subtract(20, 'days').format('YYYY-MM-DD');
+                var end_date = moment().format('YYYY-MM-DD');
+
+                $('#incident_date_header').text('Report for Incident count Vs. Date range of ('+ start_date+' - '+end_date+')');
+
+                $(function() {
+
+                    if('{{ filter_type }}' == 'date_icount'){
+                    $('input[name="daterange"]').daterangepicker(
+                    {startDate: init_start_date,
+                    endDate: init_end_date,
+                    },
+                    function(start, end, label) {
+                        start_date = start.format('YYYY-MM-DD');
+                        end_date = end.format('YYYY-MM-DD');
+                        $('#incident_date_header').text('Report for Incident count Vs. Date range of ('+ start_date+' - '+end_date+')');
+                    });
+
+                   $('#daterange').data('daterangepicker').setStartDate(init_start_date);
+                    $('#daterange').data('daterangepicker').setEndDate(init_end_date);
+
+                    }
+
+                  $('.selectpicker').on('change', function(){
+                    var selected = $(this).val();
+
+                  });
+
+
+                });
+
+
+
+
+                </script>
+                </div></div></div></div>
+                {% endblock %}

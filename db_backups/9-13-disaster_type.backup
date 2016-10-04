@@ -1,0 +1,15 @@
+
+COPY disaster_type (id, english, sinhala, tamil) FROM stdin;
+4	Tsunamis		
+9	Thunder Storm		
+2	Flood		
+5	Landslides		
+8	Fire		
+7	Explostion		
+6	Cyclone		
+1	Drought		
+3	Earthquakes		
+11	Chemical		
+10	Epedemic		
+\.
+

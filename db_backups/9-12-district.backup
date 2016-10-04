@@ -1,0 +1,31 @@
+
+
+
+COPY district (id, name, province_id) FROM stdin;
+3	Kandy	2
+4	Matale	2
+5	Nuwara Eliya	2
+6	Ampara	3
+7	Batticaloa	3
+8	Trincomalee	3
+9	Anuradhapura	4
+10	Polonnaruwa	4
+11	Kurunegala	6
+12	Puttalam	6
+13	Jaffna	5
+14	Kilinochchi	5
+15	Mannar	5
+16	Mullaitivu	5
+17	Vavuniya	5
+18	Kegalle	7
+19	Ratnapura	7
+20	Galle	8
+21	Hambantota	8
+22	Matara	8
+23	Badulla	9
+24	Monaragala	9
+25	Gampaha	1
+26	Kalutara	1
+2	Colombo	1
+\.
+

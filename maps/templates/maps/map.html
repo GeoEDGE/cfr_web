@@ -1,0 +1,396 @@
+{% extends "dashboard/site_header.html" %}
+
+{% load static %}
+
+{% block content %}
+
+<!-- page content -->
+<div ng-app="mapApp" ng-controller="MapController" ng-init="init()" class="right_col" role="main">
+    <div class="">
+
+
+        <div class="clearfix"></div>
+
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-xs-12">
+                <div class="x_panel">
+                    <div class="x_title">
+                        <h2>Map Page</h2>
+                        <ul class="nav navbar-right panel_toolbox">
+                            <li><a id="modal-471365" href="#modal-container-471365" role="button" class="btn"
+                                   data-toggle="modal"><i class="fa fa-save"></i></a></li>
+
+                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                            </li>
+
+
+                        </ul>
+                        <div class="clearfix"></div>
+                    </div>
+                    <div class="x_content">
+                        <div id="map" class="map" style="height:800px;">
+                            <div class="col-md-4 col-sm-4 col-xs-12"
+                                 style="position:absolute;top:10px;z-index:100;">
+                                <div class="x_panel tile fixed_height_320">
+                                    <div class="x_title">
+                                        <h4>Filtering Options</h4>
+                                        <ul style="margin-top:-35px;" class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+
+                                        </ul>
+
+
+                                    </div>
+                                    <div class="x_content">
+                                        <div class="col-md-12 col-sm-12" style="margin:0;padding:0;">
+                                            <form class="form-horizontal">
+                                                <fieldset>
+
+                                                    <!-- Select Basic -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label"
+                                                               for="selectbasic">Type</label>
+                                                        <div class="col-md-10">
+                                                            <select class="form-control" ng-model="selectedDisaster"
+                                                                    ng-change="getFilterData(selectedDisaster, 'disaster')">
+                                                                <option value="-1">Select Disaster</option>
+                                                                {% for disaster in disasters %}
+                                                                <option value={{ disaster.id }}>
+                                                                    {{ disaster.english }}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Multiple Radios -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label"
+                                                               for="radios">Status</label>
+                                                        <div class="col-md-10">
+                                                            <label class="radio-inline" for="radios-0">
+                                                                <input name="radios"
+                                                                       ng-change="getFilterData(is_validated, 'validation')"
+                                                                       ng-model="is_validated" id="radios-0" value="1"
+                                                                       type="radio">
+                                                                Verified
+                                                            </label>
+                                                            <label class="radio-inline" for="radios-1">
+                                                                <input name="radios" ng-model="is_validated"
+                                                                       ng-change="getFilterData(is_validated, 'validation')"
+                                                                       id="radios-1" value="0"
+                                                                       type="radio">
+                                                                Unverified
+                                                            </label>
+                                                            <label class="radio-inline" for="radios-2">
+                                                                <input name="radios" ng-model="is_validated"
+                                                                       ng-change="getFilterData(is_validated, 'validation')"
+                                                                       id="radios-2" value="all"
+                                                                       type="radio" checked="checked">
+                                                                All
+                                                            </label>
+
+                                                        </div>
+                                                    </div>
+
+
+                                                    <!-- Text input-->
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label"
+                                                               for="textinput">Date</label>
+                                                        <div class="col-md-10">
+                                                            <input type="text" id="daterange" name="daterange"
+                                                                   class="form-control"
+                                                            />
+                                                            <i class="glyphicon glyphicon-calendar form-control-feedback"
+                                                               style="margin-right:5px;margin-top:5px;"></i>
+                                                        </div>
+                                                    </div>
+
+                                                    <!-- Select Basic -->
+
+
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label"
+                                                               for="selectbasic">District</label>
+                                                        <div class="col-md-10">
+                                                            <select ng-model="selectedDistrict"
+                                                                    ng-change="getFilterData(selectedDistrict, 'district')"
+                                                                    class="form-control"
+                                                                    style="border-radius:0;">
+                                                                <option value="-1">Select District</option>
+                                                                {% for district in districts %}
+                                                                <option value={{ district.name }}>
+                                                                    {{ district.name }}
+                                                                </option>
+                                                                {% endfor %}
+
+
+                                                            </select>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <!-- Button (Double) -->
+                                                    <div class="form-group">
+                                                        <label class="col-md-2 control-label"
+                                                               for="button1id"></label>
+                                                        <div class="col-md-10">
+                                                            <button ng-click="layerFilter()" id="button1id"
+                                                                    name="button1id"
+                                                                    class="btn btn-success">Filter
+                                                            </button>
+                                                            <button id="button2id" name="button2id"
+                                                                    class="btn btn-default">Clear
+                                                            </button>
+                                                        </div>
+                                                    </div>
+
+                                                </fieldset>
+                                            </form>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="x_panel tile fixed_height_320" style="">
+                                    <div class="x_title">
+                                        <h4>Map Legend</h4>
+
+                                        <ul style="margin-top:-35px;" class="nav navbar-right panel_toolbox">
+                                            <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                            </li>
+
+                                        </ul>
+
+                                    </div>
+                                    <div class="x_content" style="height:240px;overflow:auto;">
+                                        <div class="col-md-12 col-sm-12" style="margin:0;padding:0;">
+                                            <i style="color:#FE2B0E;" class="fa fa-stop" aria-hidden="true"></i> Today
+                                            &nbsp;&nbsp;
+                                            <i style="color:#FEA100;" class="fa fa-stop" aria-hidden="true"></i> One
+                                            Week &nbsp;&nbsp;
+                                            <i style="color:#E0FF49;" class="fa fa-stop" aria-hidden="true"></i> After
+                                            One Week
+                                            <table class="table table">
+                                                <thead>
+                                                <tr>
+                                                    <th>
+
+                                                    </th>
+
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr>
+                                                    <td>
+                                                        Chemical
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/chemical1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Cyclone
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/cyclone1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Drought
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/drought1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Earthquake
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/earthquake1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Epidemic
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/epedemic1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Explosion
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/explosion1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Fire
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/fire1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Flood
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/flood1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Landslide
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/landslide1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Thunderstorm
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/thunderstorm1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+                                                <tr>
+                                                    <td>
+                                                        Tsunami
+                                                    </td>
+                                                    <td>
+                                                        <img class="dicon"
+                                                             src="{% static 'maps/images/CFR_icons/tsunami1.png' %}"
+                                                             alt="Image"/>
+                                                    </td>
+
+                                                </tr>
+
+
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+
+                                    </div>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                        <script>
+
+
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12">
+                <div class="modal fade" id="modal-container-471365" role="dialog" aria-labelledby="myModalLabel"
+                     aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content" style="z-index:10000000000000000000000000;">
+                            <div class="modal-header">
+
+                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+                                    ×
+                                </button>
+                                <h4 class="modal-title" id="myModalLabel">
+                                    Save
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <ul style="list-style-type:none;">
+                                    {% verbatim %}
+                                    <li ng-repeat="format in LAYER_DOWNLOAD_FROMATS">
+                                        <a ng-href="{{fetch_url(format.code)}}">{{ format.name }}</a>
+                                    </li>
+                                    {% endverbatim %}
+                                </ul>
+                            </div>
+                            <div class="modal-footer">
+
+
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                </div>
+            </div>
+       <div id="popup" style='width:150px'></div>
+        </div>
+</div></div>
+        <script>
+            var start_date = moment().subtract(20, 'days').format('MM/DD/YYYY');
+            var end_date = moment().format('MM/DD/YYYY');
+            $(function() {
+
+                function setDateRange(start, end) {
+                    $('#daterange').data('daterangepicker').setStartDate(start_date);
+                    $('#daterange').data('daterangepicker').setEndDate(end_date);
+                }
+
+                $('#daterange').daterangepicker({
+                    startDate: start_date,
+                    endDate: end_date,
+                },
+                function(start, end, label) {
+                    start_date = start.format('YYYY-MM-DD');
+                    end_date = end.format('YYYY-MM-DD');
+                }
+                , setDateRange);
+
+                setDateRange(start_date, end_date);
+
+            });
+
+
+        </script>
+        <!-- /page content -->
+
+        {% endblock %}

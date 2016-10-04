@@ -1,0 +1,22 @@
+report_data = None
+     post_data = json.loads(request.body)
+     from_date = post_data['from_date']
+     end_date = post_data['end_date']
+
+     #date_current = date(int(2016), int(9), int(1))
+     date_current = datetime.date(int(2016), int(9), int(1))
+     end_date= datetime.date(2016, 9, 10)
+     start_date = datetime.date(2016, 9, 1)
+     from_date = datetime.datetime.strptime(from_date, "%Y-%m-%d").date()
+     end_date = datetime.datetime.strptime(end_date, "%Y-%m-%d").date()
+
+if filter_query == 'date_icount':
+        report_data = Incident.objects.filter(reported_date__range=(start_date, end_date)).extra(select={'date': 'DATE(reported_date)'})\
+        .values('reported_date')\
+        .annotate(count=Count('reported_date')).order_by('-count')
+
+     elif filter_query == 'district_disaster':
+        report_data = Incident.objects.values('district')\
+        .annotate(count=Count('district')).order_by('-count')
+
+     return HttpResponse(json.dumps(list(report_data), cls=DjangoJSONEncoder), content_type='application/json')

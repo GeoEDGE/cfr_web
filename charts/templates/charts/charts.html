@@ -1,0 +1,160 @@
+{% extends "dashboard/site_header.html" %}
+
+{% load static %}
+
+{% block content %}
+ <link href="{% static 'charts/css/ng-print.css' %}" rel="stylesheet">
+<!-- page content -->
+<div class="right_col" role="main" ng-app="chartApp" ng-controller="ChartController">
+    <div class="">
+        <div class="page-title">
+            <div class="title_left">
+                <h3>Charts
+                    <small></small>
+                </h3>
+            </div>
+
+
+        </div>
+
+        <div class="clearfix"></div>
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Number of Incidents Vs. Date</h2>
+                <ul class="nav navbar-right panel_toolbox">
+
+
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+
+
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" style="min-height:80px;">
+<form class="form-inline">
+  <div class="form-group">
+    <label for="email">Date</label>
+    
+   <input type="text" name="daterange" style="margin-top:-3px;width:250px;" id="daterange" class="form-control"
+                                />
+                                <!--i class="glyphicon glyphicon-calendar form-control-feedback"
+                                   style="margin-right:5px;margin-top:5px;"></i-->
+  </div>
+  
+  
+  <button ng-click="draw_chart('date_icount')" class="btn btn-info">Draw Chart</button>
+                                <button ng-print print-element-id="printdiv" class="btn btn-info">Print Chart</button>
+</form>
+
+
+
+
+
+                <form class="form-horizontal">
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-md-1 control-label"></label>
+                            <div class="col-md-4">
+                                
+                            </div>
+                            <div class="col-md-5">
+                                
+                            </div>
+                        </div>
+
+
+                    </fieldset>
+                </form>
+                <div id="printdiv">
+                    <h2 id="title">Chart</h2>
+                    <nvd3 id="line_chart" options='options' data='data' api="api"
+                          config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                </div>
+            </div>
+        </div>
+        <div class="clearfix"></div>
+
+
+        <div class="x_panel">
+            <div class="x_title">
+                <h2>Number of Incidents for Disaster Type</h2>
+                <ul class="nav navbar-right panel_toolbox">
+
+
+                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                    </li>
+
+
+                </ul>
+                <div class="clearfix"></div>
+            </div>
+            <div class="x_content" style="min-height:80px;">
+            <form class="form-inline">
+  <div class="form-group">
+    <label for="email">District</label>
+    			<select class="selectpicker form-control" ng-model="selectedDistrict" style="margin-top:-3px;width:250px;" class="form-control"
+                        >
+                            {% for ditrict in districts %}
+                            <option value="{{ ditrict.name }}">{{ ditrict.name }}</option>
+                            {% endfor %}
+                        </select>
+  </div>
+  
+  
+   <button class="btn btn-info" ng-click="draw_chart('district_icount')">Draw Chart</button>
+   <button class="btn btn-info" ng-print print-element-id="pie_chart_container">Print Chart</button>
+</form>
+            
+            
+            
+            
+                
+
+                <div class="clearfix"></div>
+                <div id="pie_chart_container">
+                <h2 id="pie_chart_header">Chart</h2>
+                <nvd3 id="pie_chart" options='options_district_pie' data='data_district_pie' api="api_disaster_icount"
+                      config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+                var init_start_date = moment().subtract(20, 'days').format('MM/DD/YYYY');
+                var init_end_date = moment().format('MM/DD/YYYY');
+
+                var start_date = moment().subtract(20, 'days').format('YYYY-MM-DD');
+                var end_date = moment().format('YYYY-MM-DD');
+
+                $('#title').text('Report for Incident count Vs. Date range of ('+ start_date+' - '+end_date+')');
+
+                $(function() {
+
+                    function setDateRange(start, end) {
+                    $('#daterange').data('daterangepicker').setStartDate(start);
+                    $('#daterange').data('daterangepicker').setEndDate(end);
+                    }
+
+                    $('input[name="daterange"]').daterangepicker(
+                    {startDate: init_start_date,
+                    endDate: init_end_date,
+                    },
+                    function(start, end, label) {
+                        start_date = start.format('YYYY-MM-DD');
+                        end_date = end.format('YYYY-MM-DD');
+                        $('#title').text('Report for Incident count Vs. Date range of ('+ start_date+' - '+end_date+')');
+
+                    });
+
+                    setDateRange(init_start_date, init_end_date);
+
+                });
+
+
+
+        </script>
+        </div></div>
+        {% endblock %}

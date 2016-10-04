@@ -1,0 +1,257 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en" ng-app="reportApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>CFR</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'reports/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{% static 'reports/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{% static 'reports/vendors/nprogress/nprogress.css' %}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{% static 'reports/css/custom.css' %}" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'reports/css/bootstrap-select.min.css' %}">
+
+
+    <script src="{% static 'reports/vendors/openlayers/ol.js' %}"></script>
+    <style>
+.form-horizontal .control-label {text-align:left;}
+.btn .dropdown-toggle .btn-default {border-radius:0;}
+
+    </style>
+</head>
+
+<body ng-controller="ReportController" class="nav-md">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="index.html" class="site_title"><i class="fa fa-map-marker"></i> <span>CFR</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div class="profile">
+                    <div class="profile_pic">
+                        <img src="{% static 'reports/img/img.png' %}" alt="..." class="img-circle profile_img">
+                    </div>
+                    <div class="profile_info">
+                        <span>Welcome,</span>
+                        <h2>Admin</h2>
+                    </div>
+                </div>
+                <!-- /menu profile quick info -->
+
+                <br/>
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <h3 style="color:#898989;">----------------------------------------</h3>
+                        <ul class="nav side-menu">
+                            <li><a href="index.html"><i class="fa fa-home"></i> Dashboard </a>
+
+                            </li>
+                            <li><a href="map.html"><i class="fa fa-edit"></i> Disaster Map </a>
+
+                            </li>
+                            <li><a><i class="fa fa-desktop"></i> User Manegment <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="add_user.html">Add User</a></li>
+                                    <li><a href="profile.html">Profile</a></li>
+                                    <li><a href="user_maneger.html">Manage Users</a></li>
+
+                                </ul>
+                            </li>
+                            <!--li><a href="add_disaster.html"><i class="fa fa-table"></i> Add Disaster </a-->
+
+                            </li>
+                            <li><a href="incedent.html"><i class="fa fa-table"></i> Incedents </a>
+
+                            </li>
+                            <li><a href="charts.html"><i class="fa fa-table"></i> Charts </a>
+
+                            </li>
+
+
+                        </ul>
+                    </div>
+
+
+                </div>
+                <!-- /sidebar menu -->
+
+
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="{% static 'reports/img/img.png' %}" alt="">Admin
+                                <span class=" fa fa-angle-down"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                <li><a href="javascript:;"> Profile</a></li>
+
+                                <li><a href="javascript:;">Help</a></li>
+                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                            </ul>
+                        </li>
+
+
+                        <li role="presentation" class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+                               aria-expanded="false">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="badge bg-green">6</span>
+                            </a>
+                            <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'reports/img/img.png' %}" alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'reports/img/img.png' %}" alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'reports/img/img.png' %}" alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'reports/img/img.png' %}" alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="text-center">
+                                        <a>
+                                            <strong>See All Messages</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>Reports</h2>
+                            <ul class="nav navbar-right panel_toolbox">
+
+                                <li style="float:left;">
+                                    <a id="modal-471365" href="#modal-container-471365" role="button" class="btn"
+                                       data-toggle="modal"><i class="fa fa-save"></i></a>
+                                </li>
+
+                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                </li>
+
+
+                            </ul>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content" style="min-height:480px;">
+
+                          <h4>  <a href="{% url 'report' 'date_icount' %}">Incident count Vs. Date</a></h4>
+                          <h4>  <a href="{% url 'report' 'district_disaster' %}">Incident count Vs. District</a></h4>
+
+                        </div>
+                        <!-- /page content -->
+
+                        <!-- footer content -->
+                        <footer>
+                            <div class="pull-right">
+                                CFR Developed by <a href="https://geoedge.lk">GeoEDGE</a>
+                            </div>
+                            <div class="clearfix"></div>
+                        </footer>
+                        <!-- /footer content -->
+                    </div>
+                </div>
+
+
+                <script src="{% static 'reports/vendors/jquery/dist/jquery.min.js' %}"></script>
+                <script src="{% static 'reports/vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+                <script src="{% static 'reports/js/moment/moment.min.js' %}"></script>
+                <script src="{% static 'reports/js/datepicker/daterangepicker.js' %}"></script>
+
+
+                <script src="{% static 'reports/js/bootstrap-select.min.js' %}"></script>
+                <!-- FastClick -->
+                <script src="{% static 'reports/vendors/fastclick/lib/fastclick.js' %}"></script>
+                <!-- NProgress -->
+                <script src="{% static 'reports/vendors/nprogress/nprogress.js' %}"></script>
+
+                <!-- Custom Theme Scripts -->
+                <script src="{% static 'reports/js/custom.js' %}"></script>
+
+                <script src="{% static 'reports/js/angular/angular.js' %}"></script>
+                <script src="{% static 'reports/js/angular/angular-resource.js' %}"></script>
+                <script src="{% static 'reports/js/angular-cookies/angular-cookies.min.js' %}"></script>
+                <script src="{% static 'reports/js/reports.js' %}"></script>
+
+</body>
+</html>

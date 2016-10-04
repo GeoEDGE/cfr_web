@@ -1,0 +1,15 @@
+@media screen{
+#printSection{display:block;}
+#title {display:none;}
+#pie_chart_header {display:none;}
+}
+@media print{
+#title {display:block;}
+#pie_chart_header {display:block;}
+#line_chart {width:1500px;}
+body *{display:none;}
+#printSection,#print,#printSection *{display:block;}
+#printSection{position:absolute;left:0;top:0}
+#printdiv{display:block;}
+#title {display:block;}
+}

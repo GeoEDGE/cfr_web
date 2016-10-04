@@ -1,0 +1,122 @@
+{% extends "dashboard/site_header.html" %}
+
+{% load static %}
+
+{% block content %}
+{% load render_table from django_tables2 %}
+
+
+    <script>
+$(document).ready(function(){
+    $('#id_reported_date_0').prop({type:"date"});
+    $('#id_reported_date_1').prop({type:"date"});
+});
+    </script>
+<style>
+    .table-container {width:100%;}
+</style>
+<style>
+input[type=text], select {
+    width: 35%;
+    padding: 5px 5px;
+    margin: 8px 0;
+
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=date] {
+    width: 35%;
+    padding: 5px 5px;
+    margin: 8px 0;
+
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 20%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px 5px;
+    margin: 8px 0;
+    margin-left:130px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+#id_name {margin-left:90px;}
+#id_disaster_type {margin-left:45px;}
+#id_validation {margin-left:32px;}
+#id_reported_date_0 {width:15%;margin-left:38px;}
+#id_reported_date_1 {width:15%;margin-left:38px;}
+#id_district {margin-left:80px;}
+#id_is_validated {margin-left:55px;}
+.helptext {display:none;}
+</style>
+
+
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Reported Incidents</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <div class="col-md-8">
+
+                                </div>
+                                <div class="col-md-9">
+
+                                </div>
+                                <br><br>
+                                {% if table %}
+                                <form method='GET'>
+                                    {{ filter.form }}
+                                    <input type='submit' class='btn btn-primary' value='Filter'/>
+
+                                     <br><br>
+                                    Displaying {{ filter.qs.count }} of {{ filter.queryset.count }} items.
+                                    |
+
+                                    <a href='{{ request.path }}'>Clear</a>
+                                </form>
+
+                                     {% render_table table %}
+                                {% else %}
+                                    No records found
+                                {% endif %}
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- /page content -->
+
+   {% endblock %}

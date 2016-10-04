@@ -1,0 +1,138 @@
+ssh root@166.63.122.161
+
+
+https://django-tastypie.readthedocs.io/en/latest/index.html#quick-start
+
+https://django-tastypie.readthedocs.io/en/latest/tutorial.html
+
+create new
+https://django-tastypie.readthedocs.io/en/latest/interacting.html
+
+multiple values for parameters
+https://sourceforge.net/p/geoserver/mailman/message/30426491/
+
+
+for e in Incident.objects.annotate(dcount=Count('name')):
+...     print(e.dcount)
+
+
+charts refresh
+
+https://github.com/krispo/angular-nvd3/issues/37
+http://plnkr.co/edit/ZLcS6M?p=preview
+https://github.com/krispo/angular-nvd3/issues/21
+
+//
+pg_dump --table district -U postgres cfr -f /home/geoedge/public_html/demo/cfr/db_backups/9-12-province.sql
+/home/geoedge/public_html/demo/cfr/db_backups
+
+pg_restore -U postgres --table=province --dbname=cfr < /home/sachie/cfr/db_backups/9-12-province.backup;
+
+psql -U postgres --table=district -a --dbname=cfr < /home/sachie/cfr/db_backups/9-12-district.backup
+
+http://gis.stackexchange.com/questions/127875/how-pass-a-list-to-viewparams-variables-in-geoserver-sql-views
+
+disaster_type=1%20AND%20district=%27Colombo%27
+
+psql -h localhost -p 5432 -U postgres cfr
+ALTER TABLE incident ADD COLUMN DS character varying(255);
+
+
+<MinScaleDenominator>300000</MinScaleDenominator>
+      <MaxScaleDenominator>1000000</MaxScaleDenominator>
+
+
+<Rule>
+    <Title> &gt; 2477574.0 AND &lt;= 4866692.0</Title>
+    <Filter>
+      <And>
+        <PropertyIsGreaterThan>
+          <PropertyName>PERSONS</PropertyName>
+          <Literal>2477574.0</Literal>
+        </PropertyIsGreaterThan>
+        <PropertyIsLessThanOrEqualTo>
+          <PropertyName>PERSONS</PropertyName>
+          <Literal>4866692.0</Literal>
+        </PropertyIsLessThanOrEqualTo>
+      </And>
+    </Filter>
+    <PolygonSymbolizer>
+      <Fill>
+        <CssParameter name="fill">#AA0055</CssParameter>
+      </Fill>
+      <Stroke/>
+    </PolygonSymbolizer>
+  </Rule>
+
+
+http://geoserver.readthedocs.io/en/latest/community/sldservice/
+
+
+// django user authentication
+from django.contrib.auth import authenticate
+user = authenticate(username='john', password='secret')
+if user is not None:
+    # A backend authenticated the credentials
+else:
+    # No backend authenticated the credentials
+
+
+https://docs.djangoproject.com/en/1.10/topics/auth/default/
+
+@permission_required('polls.can_vote')
+
+permission = Permission.objects.create(
+    codename='view_dashboard',
+    name='View incident dashboard',
+    content_type=content_type,
+)
+
+
+charts index func
+if not request.user.is_authenticated:
+        return redirect('%s?next=%s' % (settings.LOGIN_URL, request.path))
+    else:
+        context = {
+            'districts': District.objects.all()
+        }
+        return render(request, 'charts/charts.html', context)
+
+
+#@login_required(login_url='/admin/login/')
+
+
+
+#table column url
+http://stackoverflow.com/questions/13211301/django-tables2-linkcolumn-external-url
+
+#django filters
+http://django-filter.readthedocs.io/en/latest/install.html
+
+date filtering
+http://stackoverflow.com/questions/15487537/how-to-filter-an-object-based-on-a-datetimefield-range-in-python-django-using
+
+
+
+17
+down vote
+It didn't work, because QuerySets are not JSON serializable.
+
+1) In case of json.dumps you have to explicitely convert your QuerySet to JSON serializable objects:
+
+class Model(model.Model):
+    def as_dict(self):
+        return {
+            "id": self.id,
+            # other stuff
+        }
+And the serialization:
+
+dictionaries = [ obj.as_dict() for obj in self.get_queryset() ]
+return HttpResponse(json.dumps({"data": dictionaries}), content_type='application/json')
+2) In case of serializers. Serializers accept either JSON serializable object or QuerySet, but a dictionary conatining a QuerySet is neither. Try this:
+
+serializers.serialize("json", self.get_queryset())
+
+select CURRENT_DATE, CURRENT_DATE - 7 as week_before, id from incident;
+
+Geoserver installation http://eliteservermanagement.com/issues/how-to-install-geoserver-on-cpanel/

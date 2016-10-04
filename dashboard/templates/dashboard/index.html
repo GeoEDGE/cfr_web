@@ -1,0 +1,142 @@
+{% extends "dashboard/site_header.html" %}
+{% load static %}
+
+
+{% block content %}
+
+<!-- page content -->
+<div class="right_col" ng-app="mapApp" ng-controller="DashboardController" ng-init="init()" role="main">
+
+    <!-- top tiles -->
+    <div class="row tile_count">
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> New Incidents</span>
+            <div class="count red">25</div>
+
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-clock-o"></i> Unconfirmed</span>
+            <div class="count blue" ng-bind="non_confirmed"></div>
+
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> Confirmed</span>
+            <div class="count green" ng-bind="confirmed"></div>
+
+        </div>
+        <div class="col-md-3 col-sm-4 col-xs-6 tile_stats_count">
+            <span class="count_top"><i class="fa fa-user"></i> Total Incidents</span>
+            <div class="count purple" ng-bind="total_incidents"></div>
+
+        </div>
+
+    </div>
+    <!-- /top tiles -->
+
+    <div class="row">
+        <div class="col-md-12 col-sm-12 col-xs-12">
+            <div class="x_panel">
+
+                <div class="row x_title">
+                    <div class="col-md-6">
+                        <h3>Disaster Map <span> <a href="{% url 'maps:index' %}" class="btn btn-xs btn-info"
+                                                   style="float-right;">Full Map </a></span></h3>
+                    </div>
+                </div>
+
+                <div class="x_content">
+                    <div class="col-md-9 col-sm-9 col-xs-12">
+                        <div id="placeholder33" style="height: 260px; display: none" class="demo-placeholder"></div>
+                        <div style="width: 100%;">
+                            <div id="map" class="map thumbnail" style="height:540px;"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-sm-3 col-xs-12 bg-white">
+                        <div class="x_title">
+                            <h2>Affected people by Province</h2>
+                            <div class="clearfix"></div>
+                        </div>
+
+                        {% verbatim %}
+
+                        <style>
+
+         .progress-bar {width:}
+
+
+                        </style>
+
+                        <div ng-repeat="inc in province_inc" class="col-md-12 col-sm-12 col-xs-6">
+                            <div>
+                                <p ng-bind="inc.province + ' Province'"></p>
+                                <div class="">
+
+                                    <div class="progress">
+
+                                        <div class="progress-bar" role="progressbar"
+                                             aria-valuenow="{{ (inc.count/total_incidents)*100  }}"
+                                             aria-valuemin="0" aria-valuemax="100"
+                                             style="width:{{ (inc.count/total_incidents)*100  }}%">
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                        {% endverbatim %}
+
+                        <div class="clearfix"></div>
+                    </div>
+                </div>
+
+            </div>
+            <br/>
+
+            <div class="row">
+                <div class="col-md-121">
+
+
+                    <div class="col-md-12 col-sm-6 col-xs-12">
+                        <div class="x_panel tile fixed_height_720 overflow_hidden">
+                            <div class="x_title">
+                                <h2>Disaster Situation</h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+
+                                    </li>
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <table class="" style="width:100%">
+                                    <tr>
+
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <nvd3 options='options' data='data'
+                                                  api="api"
+                                                  config="{refreshDataOnly: true, deepWatchData: true}"></nvd3>
+
+                                        </td>
+
+                                    </tr>
+                                </table>
+                                </td>
+                                </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <div id="popup" style='width:150px'></div>
+
+        </div></div></div>
+        <!-- /page content -->
+
+        {% endblock %}

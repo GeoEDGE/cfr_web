@@ -1,0 +1,377 @@
+{% load static %}
+{% load nvd3_tags %}
+
+<!DOCTYPE html>
+<html lang="en" ng-app="chartApp">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>CFR</title>
+
+    <!-- Bootstrap -->
+    <link href="{% static 'charts/vendors/bootstrap/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="{% static 'charts/vendors/font-awesome/css/font-awesome.min.css' %}" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="{% static 'charts/vendors/nprogress/nprogress.css' %}" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="{% static 'charts/css/custom.css' %}" rel="stylesheet">
+    <link href="{% static 'charts/css/nv.d3.min.css' %}" rel="stylesheet">
+
+</head>
+
+<body class="nav-md" ng-controller="ChartController">
+<div class="container body">
+    <div class="main_container">
+        <div class="col-md-3 left_col">
+            <div class="left_col scroll-view">
+                <div class="navbar nav_title" style="border: 0;">
+                    <a href="index.html" class="site_title"><i class="fa fa-map-marker"></i> <span>CFR</span></a>
+                </div>
+
+                <div class="clearfix"></div>
+
+                <!-- menu profile quick info -->
+                <div class="profile">
+                    <div class="profile_pic">
+                        <img src="{% static 'charts/img/img.png' %}" alt="..." class="img-circle profile_img">
+                    </div>
+                    <div class="profile_info">
+                        <span>Welcome,</span>
+                        <h2>John Doe</h2>
+                    </div>
+                </div>
+                <!-- /menu profile quick info -->
+
+                <br/>
+
+                <!-- sidebar menu -->
+                <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                    <div class="menu_section">
+                        <h3 style="color:#898989;">----------------------------------------</h3>
+                        <ul class="nav side-menu">
+                            <li><a href="index.html"><i class="fa fa-home"></i> Dashboard </a>
+
+                            </li>
+                            <li><a href="map.html"><i class="fa fa-edit"></i> Disaster Map </a>
+
+                            </li>
+                            <li><a><i class="fa fa-desktop"></i> User Manegment <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="add_user.html">Add User</a></li>
+                                    <li><a href="profile.html">Profile</a></li>
+                                    <li><a href="user_maneger.html">Manage Users</a></li>
+
+                                </ul>
+                            </li>
+                            <!--li><a href="add_disaster.html"><i class="fa fa-table"></i> Add Disaster </a-->
+
+                            </li>
+                            <li><a href="incedent.html"><i class="fa fa-table"></i> Incedents </a>
+
+                            </li>
+                            <li><a href="charts.html"><i class="fa fa-table"></i> Charts </a>
+
+                            </li>
+
+
+                        </ul>
+                    </div>
+
+
+                </div>
+                <!-- /sidebar menu -->
+
+
+            </div>
+        </div>
+
+        <!-- top navigation -->
+        <div class="top_nav">
+            <div class="nav_menu">
+                <nav>
+                    <div class="nav toggle">
+                        <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                    </div>
+
+                    <ul class="nav navbar-nav navbar-right">
+                        <li class="">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
+                                <img src="{% static 'charts/img/img.png' %}" alt="">Admin
+                                <span class=" fa fa-angle-down"></span>
+                            </a>
+                            <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                <li><a href="javascript:;"> Profile</a></li>
+
+                                <li><a href="javascript:;">Help</a></li>
+                                <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                            </ul>
+                        </li>
+
+                        <li role="presentation" class="dropdown">
+                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+                               aria-expanded="false">
+                                <i class="fa fa-envelope-o"></i>
+                                <span class="badge bg-green">6</span>
+                            </a>
+                            <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'charts/img/img.png' %}" alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'charts/img/img.png' %}" alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'charts/img/img.png' %}" alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a>
+                                        <span class="image"><img src="{% static 'charts/img/img.png' %}" alt="Profile Image"/></span>
+                        <span>
+                          <span>Admin User</span>
+                          <span class="time">3 mins ago</span>
+                        </span>
+                        <span class="message">
+                          Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        </span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <div class="text-center">
+                                        <a>
+                                            <strong>See All Messages</strong>
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- /top navigation -->
+
+        <!-- page content -->
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3>Charts
+                            <small></small>
+                        </h3>
+                    </div>
+
+                    <div class="title_right">
+                        <div class="col-md-5 col-sm-5 col-xs-12 form-group pull-right top_search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button">Go!</button>
+                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="clearfix"></div>
+                <form class="form-horizontal">
+                    <fieldset>
+                        <div class="form-group">
+                            <label class="col-md-2 control-label" for="textinput">Date</label>
+                            <div class="col-md-10">
+                                <input type="text" name="daterange" class="form-control"
+                                />
+                                <i class="glyphicon glyphicon-calendar form-control-feedback"
+                                   style="margin-right:5px;margin-top:5px;"></i>
+                            </div>
+                        </div>
+
+                    </fieldset>
+                </form>
+
+                {% include_container "linechart_container" 400 600 %}
+
+                <div class="clearfix"></div>
+
+
+
+                <!--div class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Radar
+                                    <small>Sessions</small>
+                                </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <canvas id="canvasRadar"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Donut Graph
+                                    <small>Sessions</small>
+                                </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <canvas id="canvasDoughnut"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+                <div-- class="row">
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Pie Graph Chart
+                                    <small>Sessions</small>
+                                </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <canvas id="pieChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-6 col-xs-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Pie Area Graph
+                                    <small>Sessions</small>
+                                </h2>
+                                <ul class="nav navbar-right panel_toolbox">
+                                    <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                                    </li>
+
+                                </ul>
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <canvas id="polarArea"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div-->
+            </div>
+        </div>
+        <!-- /page content -->
+
+        <!-- footer content -->
+        <footer>
+            <div class="pull-right">
+                CFR Developed by <a href="https://geoedge.lk">GeoEDGE</a>
+            </div>
+            <div class="clearfix"></div>
+        </footer>
+        <!-- /footer content -->
+    </div>
+</div>
+
+<script src="{% static 'charts/vendors/jquery/dist/jquery.min.js' %}"></script>
+<script src="{% static 'charts/vendors/bootstrap/dist/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'reports/js/moment/moment.min.js' %}"></script>
+<script src="{% static 'reports/js/datepicker/daterangepicker.js' %}"></script>
+
+<script>
+                var start_date = moment().subtract(29, 'days');
+                var end_date = moment();
+
+                $(function() {
+
+                    function cb(start, end) {
+                      $('daterange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'));
+                     }
+
+                    $('input[name="daterange"]').daterangepicker(
+                    {startDate: start_date,
+                     endDate: end_date
+                    },
+                    function(start, end, label) {
+                        start_date = start.format('YYYY-MM-DD');
+                        end_date = end.format('YYYY-MM-DD');
+
+                    });
+
+                });
+
+                </script>
+
+<!-- FastClick -->
+<script src="{% static 'charts/vendors/fastclick/lib/fastclick.js' %}"></script>
+<!-- NProgress -->
+<script src="{% static 'charts/vendors/nprogress/nprogress.js' %}"></script>
+<!-- Chart.js -->
+<script src="{% static 'charts/vendors/Chart.js/dist/Chart.min.js' %}"></script>
+
+<!-- Custom Theme Scripts -->
+<script src="{% static 'charts/js/custom.js' %}"></script>
+
+<script src="{% static 'charts/js/d3.min.js ' %}"></script>
+<script src="{% static 'charts/js/nv.d3.min.js' %}"></script>
+<script src="{% static 'charts/js/angular/angular.js' %}"></script>
+<script src="{% static 'charts/js/angular/angular-resource.js' %}"></script>
+<script src="{% static 'charts/js/chart.js' %}"></script>
+
+<script src="{% static 'charts/js/angular-cookies/angular-cookies.min.js' %}"></script>
+
+
+{% load_chart charttype chartdata "linechart_container" extra %}
+
+</body>
+</html>
