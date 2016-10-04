@@ -1,4 +1,5 @@
 CFR installation in Linux server
+
 1) Prerequisites
 PostgreSQL database (preferred version 9.5 or latest) installation guidelines refer the below link;
 https://www.postgresql.org/download/
