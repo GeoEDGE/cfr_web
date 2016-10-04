@@ -25,7 +25,7 @@ PostgreSQL database (preferred version 9.5 or latest) installation guidelines re
     pip install django-jsonify
     pip install django-tastypie
 
-4)Once fishes the CFR project environment, to Start the CFR project use the following commands; 
+4)Now youhave setup CFR project environment, to Start the CFR project use the following commands; 
       
     cd cfr
     python manage.py runserver
